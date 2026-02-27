@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Barbearia Império | Luxo e Precisão</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+
+/* ==================== CONFIG ==================== */
+
+:root{
+--bg:#0f0f0f;
+--bg2:#1a1a1a;
+--gold:#C6A75E;
+--gold-light:#e6c67c;
+--white:#fff;
+--gray:#aaa;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;scroll-behavior:smooth;}
+
+body{
+font-family:'Montserrat',sans-serif;
+background:var(--bg);
+color:var(--white);
+}
+
+/* ==================== HEADER ==================== */
+
+header{
+position:fixed;
+width:100%;
+top:0;
+padding:18px 8%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+background:rgba(0,0,0,.85);
+backdrop-filter:blur(10px);
+z-index:1000;
+}
+
+.logo{
+font-family:'Cinzel';
+color:var(--gold);
+font-size:22px;
+}
+
+nav a{
+color:white;
+margin-left:25px;
+text-decoration:none;
+font-size:14px;
+}
+
+nav a:hover{color:var(--gold);}
+
+/* ==================== HERO ==================== */
+
+.hero{
+height:100vh;
+background:url('https://images.unsplash.com/photo-1621605815971-fbc98d665033?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+position:relative;
+}
+
+.hero::after{
+content:'';
+position:absolute;
+width:100%;
+height:100%;
+background:linear-gradient(to bottom,rgba(0,0,0,.5),rgba(0,0,0,.95));
+}
+
+.hero-content{
+position:relative;
+z-index:2;
+max-width:800px;
+animation:fadeUp 1.5s ease;
+}
+
+.hero h1{
+font-family:'Cinzel';
+font-size:60px;
+margin-bottom:20px;
+}
+
+.hero p{
+color:var(--gray);
+margin-bottom:30px;
+}
+
+.btn{
+padding:15px 35px;
+border:none;
+cursor:pointer;
+font-weight:600;
+transition:.4s;
+}
+
+.btn-gold{
+background:linear-gradient(45deg,var(--gold),var(--gold-light));
+color:#000;
+}
+
+.btn-gold:hover{
+transform:translateY(-5px);
+box-shadow:0 15px 35px rgba(198,167,94,.4);
+}
+
+/* ==================== SERVICES ==================== */
+
+section{
+padding:100px 8%;
+}
+
+.services{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:30px;
+margin-top:50px;
+}
+
+.card{
+background:var(--bg2);
+padding:30px;
+border:1px solid transparent;
+transition:.4s;
+}
+
+.card:hover{
+border:1px solid var(--gold);
+transform:translateY(-5px);
+}
+
+.price{
+color:var(--gold);
+margin-top:10px;
+font-weight:bold;
+}
+
+/* ==================== GALERIA ==================== */
+
+.gallery{
+column-count:3;
+column-gap:15px;
+margin-top:50px;
+}
+
+.gallery-item{
+position:relative;
+margin-bottom:15px;
+overflow:hidden;
+}
+
+.gallery img{
+width:100%;
+display:block;
+transition:.4s;
+}
+
+.gallery-item:hover img{
+transform:scale(1.1);
+}
+
+.gallery-item::after{
+content:"";
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,.4);
+opacity:0;
+transition:.4s;
+}
+
+.gallery-item:hover::after{
+opacity:1;
+}
+
+/* ==================== ADMIN ==================== */
+
+.admin{
+display:none;
+padding:120px 8%;
+background:#111;
+min-height:100vh;
+}
+
+.admin input{
+padding:12px;
+margin:5px 0;
+width:100%;
+background:#222;
+color:white;
+border:none;
+}
+
+.admin-list{
+margin-top:30px;
+}
+
+.admin-item{
+background:#222;
+padding:15px;
+margin-bottom:10px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+/* ==================== FOOTER ==================== */
+
+footer{
+background:#000;
+padding:60px 8%;
+margin-top:80px;
+}
+
+.footer-container{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:40px;
+}
+
+.footer-container h3{
+font-family:'Cinzel';
+color:var(--gold);
+margin-bottom:15px;
+}
+
+.footer-container p,
+.footer-container a{
+color:var(--gray);
+font-size:14px;
+text-decoration:none;
+display:block;
+margin-bottom:8px;
+}
+
+.footer-container a:hover{
+color:var(--gold);
+}
+
+.footer-bottom{
+text-align:center;
+margin-top:40px;
+border-top:1px solid #222;
+padding-top:20px;
+font-size:13px;
+color:#777;
+}
+
+/* ==================== RESPONSIVO ==================== */
+
+@media(max-width:768px){
+.hero h1{font-size:40px;}
+.gallery{column-count:1;}
+}
+
+@keyframes fadeUp{
+from{opacity:0;transform:translateY(40px);}
+to{opacity:1;transform:translateY(0);}
+}
+
+</style>
+</head>
+<body>
+
+<header>
+<div class="logo">✂ Barbearia Império</div>
+<nav>
+<a href="#">Início</a>
+<a href="#servicos">Serviços</a>
+<a href="#galeria">Galeria</a>
+<a href="#" onclick="mostrarAdmin()">Admin</a>
+</nav>
+</header>
+
+<section class="hero">
+<div class="hero-content">
+<h1>Seu Estilo Começa Aqui.</h1>
+<p>Experiência premium, precisão e transformação de imagem.</p>
+<button class="btn btn-gold" onclick="agendar()">Agendar pelo WhatsApp</button>
+</div>
+</section>
+
+<section id="servicos">
+<h2 style="text-align:center;font-family:'Cinzel';">Nossos Serviços</h2>
+<div class="services" id="servicesContainer"></div>
+</section>
+
+<!-- GALERIA -->
+<section id="galeria">
+<h2 style="text-align:center;font-family:'Cinzel';">Nossa Galeria</h2>
+<div class="gallery">
+<div class="gallery-item"><img src="https://images.unsplash.com/photo-1517832606294-7e0a09e6cc2d?auto=format&fit=crop&w=800&q=80"></div>
+<div class="gallery-item"><img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=800&q=80"></div>
+<div class="gallery-item"><img src="https://images.unsplash.com/photo-1519699047748-de8e457a634e?auto=format&fit=crop&w=800&q=80"></div>
+</div>
+</section>
+
+<!-- ================= ADMIN ================= -->
+
+<section class="admin" id="admin">
+<h2 style="font-family:'Cinzel';margin-bottom:30px;">Painel Administrativo</h2>
+
+<div id="loginArea">
+<input type="password" id="adminSenha" placeholder="Digite a senha de administrador">
+<button class="btn btn-gold" onclick="loginAdmin()">Entrar</button>
+</div>
+
+<div id="adminArea" style="display:none;">
+
+<h3 style="margin:30px 0 15px;">Adicionar / Editar Serviço</h3>
+
+<input type="text" id="serviceName" placeholder="Nome do Serviço">
+<input type="text" id="serviceDesc" placeholder="Descrição">
+<input type="text" id="servicePrice" placeholder="Preço (Ex: R$60)">
+<button class="btn btn-gold" onclick="salvarServico()">Salvar Serviço</button>
+
+<div class="admin-list" id="adminList"></div>
+
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+<div class="footer-container">
+
+<div>
+<h3>Barbearia Império</h3>
+<p>Excelência, tradição e precisão em cada detalhe.</p>
+</div>
+
+<div>
+<h3>Contato</h3>
+<p>Rua Exemplo, 123 - São Paulo - Brasil</p>
+<p>(11) 99999-9999</p>
+<p>Seg-Sáb: 09h às 20h</p>
+</div>
+
+<div>
+<h3>Redes Sociais</h3>
+<a href="#">Instagram</a>
+<a href="#">Facebook</a>
+<a href="#">WhatsApp</a>
+</div>
+
+</div>
+
+<div class="footer-bottom">
+© 2026 Barbearia Império. Todos os direitos reservados.
+</div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+
+const numeroWhats = "5511999999999";
+const senhaAdmin = "imperio123";
+
+/* ================= SUPABASE CONFIG ================= */
+
+const SUPABASE_URL = "https://lwtourrhfehhevpixzgf.supabase.co";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx3dG91cnJoZmVoaGV2cGl4emdmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIxNjk5MjYsImV4cCI6MjA4Nzc0NTkyNn0.3yDpHC6TZ-nTHdRS6Oq1HNWsMVzyjdGLuEc--tt5aio";
+
+const { createClient } = supabase;
+const db = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+/* ================= WHATS ================= */
+
+function agendar(){
+let msg="Olá, gostaria de agendar um horário na Barbearia Império.";
+window.open(`https://wa.me/${numeroWhats}?text=${encodeURIComponent(msg)}`,"_blank");
+}
+
+/* ================= ADMIN ================= */
+
+function mostrarAdmin(){
+let admin = document.querySelector(".admin");
+
+if(admin.style.display === "block"){
+admin.style.display = "none";
+}else{
+admin.style.display = "block";
+window.scrollTo({top:admin.offsetTop - 80,behavior:"smooth"});
+}
+}
+
+function loginAdmin(){
+let senha = document.getElementById("adminSenha").value;
+
+if(senha === senhaAdmin){
+document.getElementById("loginArea").style.display="none";
+document.getElementById("adminArea").style.display="block";
+renderAdmin();
+}else{
+alert("Senha incorreta!");
+}
+}
+
+function logoutAdmin(){
+document.getElementById("loginArea").style.display="block";
+document.getElementById("adminArea").style.display="none";
+document.getElementById("adminSenha").value="";
+}
+
+/* ================= SERVIÇOS ================= */
+
+let services = [];
+let editIndex = null;
+
+/* ===== BUSCAR ===== */
+
+async function fetchServices(){
+const { data, error } = await db
+.from("services")
+.select("*")
+.order("id", { ascending: true });
+
+if(error){
+console.error(error);
+return;
+}
+
+services = data;
+renderServices();
+renderAdmin();
+}
+
+/* ===== RENDER FRONT ===== */
+
+function renderServices(){
+let container=document.getElementById("servicesContainer");
+container.innerHTML="";
+
+services.forEach((s)=>{
+container.innerHTML+=`
+<div class="card">
+<h3>${s.name}</h3>
+<p>${s.desc}</p>
+<div class="price">${s.price}</div>
+</div>`;
+});
+}
+
+/* ===== RENDER ADMIN ===== */
+
+function renderAdmin(){
+let list=document.getElementById("adminList");
+list.innerHTML="";
+
+services.forEach((s,i)=>{
+list.innerHTML+=`
+<div class="admin-item">
+<div>
+<strong>${s.name}</strong><br>
+<span style="color:#aaa;font-size:13px;">${s.price}</span>
+</div>
+<div>
+<button onclick="editarServico(${i})" style="margin-right:10px;">✏</button>
+<button onclick="excluirServico(${s.id})">🗑</button>
+</div>
+</div>`;
+});
+}
+
+/* ===== SALVAR ===== */
+
+async function salvarServico(){
+
+let name=document.getElementById("serviceName").value;
+let desc=document.getElementById("serviceDesc").value;
+let price=document.getElementById("servicePrice").value;
+let btn = document.querySelector("#adminArea .btn");
+
+if(!name || !desc || !price){
+alert("Preencha todos os campos!");
+return;
+}
+
+if(editIndex===null){
+
+const { error } = await db
+.from("services")
+.insert([{ name, desc, price }]);
+
+if(error){
+console.error(error);
+return;
+}
+
+alert("Serviço adicionado com sucesso!");
+
+}else{
+
+let id = services[editIndex].id;
+
+const { error } = await db
+.from("services")
+.update({ name, desc, price })
+.eq("id", id);
+
+if(error){
+console.error(error);
+return;
+}
+
+alert("Serviço atualizado com sucesso!");
+editIndex=null;
+btn.textContent="Salvar Serviço";
+}
+
+limparCampos();
+fetchServices();
+}
+
+/* ===== EDITAR ===== */
+
+function editarServico(i){
+let s=services[i];
+document.getElementById("serviceName").value=s.name;
+document.getElementById("serviceDesc").value=s.desc;
+document.getElementById("servicePrice").value=s.price;
+editIndex=i;
+
+document.querySelector("#adminArea .btn").textContent="Atualizar Serviço";
+}
+
+/* ===== EXCLUIR ===== */
+
+async function excluirServico(id){
+
+if(confirm("Deseja excluir este serviço?")){
+
+const { error } = await db
+.from("services")
+.delete()
+.eq("id", id);
+
+if(error){
+console.error(error);
+return;
+}
+
+fetchServices();
+}
+}
+
+function limparCampos(){
+document.getElementById("serviceName").value="";
+document.getElementById("serviceDesc").value="";
+document.getElementById("servicePrice").value="";
+}
+
+/* INIT */
+
+document.addEventListener("DOMContentLoaded", ()=>{
+fetchServices();
+
+let sairBtn = document.createElement("button");
+sairBtn.textContent = "Sair do Painel";
+sairBtn.className = "btn";
+sairBtn.style.marginTop="20px";
+sairBtn.onclick = logoutAdmin;
+
+document.getElementById("adminArea").appendChild(sairBtn);
+});
+
+</script>
+
+</body>
+</html>
