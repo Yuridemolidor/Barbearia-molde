@@ -8,7 +8,7 @@
 <meta name="keywords" content="barbearia Bairro X, corte masculino Bairro X, barbeiro Bairro X">
 <meta name="author" content="Barbearia Nome">
 
-<title>Barbearia Império | Luxo e Precisão</title>
+<title>Barbearia Premium | Luxo e Precisão</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
 
@@ -280,7 +280,7 @@ to{opacity:1;transform:translateY(0);}
 <body>
 
 <header>
-<div class="logo">✂ Barbearia Império</div>
+<div class="logo">✂ Barbearia Premium</div>
 <nav>
 <a href="#">Início</a>
 <a href="#servicos">Serviços</a>
@@ -341,7 +341,7 @@ to{opacity:1;transform:translateY(0);}
 <div class="footer-container">
 
 <div>
-<h3>Barbearia Império</h3>
+<h3>Barbearia Premium</h3>
 <p>Excelência, tradição e precisão em cada detalhe.</p>
 </div>
 
@@ -362,15 +362,20 @@ to{opacity:1;transform:translateY(0);}
 </div>
 
 <div class="footer-bottom">
-© 2026 Barbearia Império. Todos os direitos reservados.
+© <span id="ano"></span> Barbearia Modelo Premium. Todos os direitos reservados.
+<br><br>
+Desenvolvido por 
+<a href="#" target="_blank" style="color: var(--gold); text-decoration: none; font-weight: 600;">
+XarTins.LTDA
+</a> — Soluções Digitais para Negócios Locais
 </div>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 
-const numeroWhats = "5511999999999";
-const senhaAdmin = "imperio123";
+const numeroWhats = "5516981359971";
+const senhaAdmin = "modelo123";
 
 /* ================= SUPABASE CONFIG ================= */
 
@@ -383,7 +388,7 @@ const db = createClient(SUPABASE_URL, SUPABASE_KEY);
 /* ================= WHATS ================= */
 
 function agendar(){
-let msg="Olá, gostaria de agendar um horário na Barbearia Império.";
+let msg="Olá, gostaria de agendar um horário na Barbearia Premium.";
 window.open(`https://wa.me/${numeroWhats}?text=${encodeURIComponent(msg)}`,"_blank");
 }
 
@@ -579,6 +584,8 @@ sairBtn.onclick = logoutAdmin;
 
 document.getElementById("adminArea").appendChild(sairBtn);
 });
+
+document.getElementById("ano").textContent = new Date().getFullYear();
 
 </script>
 
