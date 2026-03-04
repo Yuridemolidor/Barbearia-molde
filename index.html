@@ -37,6 +37,31 @@
     <div class="services" id="servicesContainer"></div>
 </section>
 
+<!-- ================= AGENDAMENTO ================= -->
+
+<section id="agendamento">
+  <h2 style="text-align:center;font-family:'Cinzel';">Agende Seu Horário</h2>
+
+  <div style="max-width:500px;margin:50px auto;display:flex;flex-direction:column;gap:15px;">
+
+    <input type="text" id="clienteNome" placeholder="Seu Nome">
+    <input type="text" id="clienteTelefone" placeholder="Seu Telefone">
+
+    <select id="servicoSelect"></select>
+
+    <input type="date" id="dataSelect" onchange="carregarHorarios()">
+
+    <select id="horarioSelect">
+      <option value="">Selecione uma data primeiro</option>
+    </select>
+
+    <button class="btn btn-gold" onclick="confirmarAgendamento()">
+      Confirmar Agendamento
+    </button>
+
+  </div>
+</section>
+
 <!-- GALERIA -->
 <section id="galeria">
     <h2 style="text-align:center;font-family:'Cinzel';">Nossa Galeria</h2>
@@ -65,6 +90,41 @@
         <input type="text" id="servicePrice" placeholder="Preço (Ex: R$60)">
         <button class="btn btn-gold" onclick="salvarServico()">Salvar Serviço</button>
 
+        <h2>Horários Disponíveis</h2>
+        <div style="display:flex;gap:10px;margin-bottom:10px;">
+            <input type="time" id="novoHorario">
+            <button class="btn" onclick="adicionarHorario()">Adicionar</button>
+        </div>
+        <div id="listaHorarios"></div>
+        <h2 style="margin-top:40px;">Bloquear Dia</h2>
+
+        <div style="display:flex;gap:10px;margin-bottom:10px;">
+            <input type="date" id="diaBloqueado">
+            <button class="btn" onclick="bloquearDia()">Bloquear</button>
+        </div>
+
+        <!-- ================= BARBEIRO ================= -->
+<section id="barbeiro">
+  <h2 style="text-align:center;font-family:'Cinzel';">Agendamentos do Barbeiro</h2>
+  <div style="max-width:600px;margin:50px auto;">
+    <table id="barbeiroTable" style="width:100%;border-collapse:collapse;">
+      <thead>
+        <tr style="background:#111;color:#fff;">
+          <th>Data</th>
+          <th>Horário</th>
+          <th>Cliente</th>
+          <th>Telefone</th>
+          <th>Serviço</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</section>
+
+<div id="listaDiasBloqueados"></div>
+        <h2 style="margin-top:40px;">Agendamentos</h2>
+        <div id="appointmentsTable"></div>
     <div class="admin-list" id="adminList"></div>
     </div>
 </section>
