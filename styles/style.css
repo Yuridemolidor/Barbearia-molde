@@ -379,32 +379,101 @@ font-size:13px;
 color:#777;
 }
 
-/* ==================== RESPONSIVO ==================== */
-
-@media(max-width:768px){
-.hero h1{font-size:40px;}
-.gallery{column-count:1;}
-}
-
-@keyframes fadeUp{
-from{opacity:0;transform:translateY(40px);}
-to{opacity:1;transform:translateY(0);}
-}
-
-/* ================= RESPONSIVO ================= */
+/* ================= MOBILE RESPONSIVO ================= */
 
 @media (max-width:600px){
 
+/* HEADER */
+
+header{
+padding:12px 5%;
+flex-direction:column;
+gap:10px;
+text-align:center;
+}
+
+nav{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:12px;
+}
+
+nav a{
+margin:0;
+font-size:13px;
+}
+
+/* HERO */
+
+.hero h1{
+font-size:34px;
+}
+
+.hero p{
+font-size:14px;
+padding:0 10px;
+}
+
+/* CAIXA DE AGENDAMENTO */
+
+.agendamento-box{
+width:90%;
+padding:25px;
+}
+
+/* INPUTS */
+
+.agendamento-box input,
+.agendamento-box select{
+font-size:14px;
+padding:10px;
+}
+
+/* CALENDÁRIO */
+
 #calendario{
+width:100%;
+max-width:100%;
 padding:15px;
 }
 
 .cal-grid{
-gap:6px;
+gap:5px;
 }
 
 .cal-dia{
-padding:8px;
+font-size:14px;
+}
+
+/* GALERIA */
+
+.gallery{
+grid-template-columns:1fr;
+}
+
+/* TABELA DO BARBEIRO */
+
+#barbeiroTable{
+min-width:500px;
+}
+
+}
+
+/* ================= TELAS MUITO PEQUENAS ================= */
+
+@media (max-width:400px){
+
+.cal-dia{
+font-size:12px;
+}
+
+.hero h1{
+font-size:28px;
+}
+
+.btn{
+padding:12px 25px;
 font-size:13px;
 }
 
