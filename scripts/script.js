@@ -40,6 +40,8 @@ document.getElementById("loginArea").style.display="none";
 document.getElementById("adminArea").style.display="block";
 renderAdmin();
 fetchAppointments();
+fetchAppointmentsBarbeiro();
+
 }else{
 alert("Senha incorreta!");
 }
@@ -286,7 +288,7 @@ async function fetchAppointments(){
             phone,
             date,
             time,
-            service ( name )
+            service:service_id ( name )
         `)
         .order("date", { ascending: true })
         .order("time", { ascending: true });
@@ -324,7 +326,7 @@ ${lista.map(a=>`
 <td>${a.time}</td>
 <td>${a.name}</td>
 <td>${a.phone}</td>
-<td>${a.service?.name || ""}</td>
+<td>${a.service_id?.name || ""}</td>
 <td>
 <button onclick="cancelarAgendamento(${a.id})">❌</button>
 </td>
@@ -347,6 +349,7 @@ await db
 .eq("id", id);
 
 fetchAppointments();
+fetchAppointmentsBarbeiro();
 }
 
 /* Adicionar novo horário */
@@ -482,6 +485,10 @@ async function confirmarAgendamento(){
 
     alert("Agendamento confirmado com sucesso! 🎉");
 
+    fetchAppointmentsBarbeiro();
+    fetchAppointments();
+
+
     // Limpar campos
     document.getElementById("clienteNome").value = "";
     document.getElementById("clienteTelefone").value = "";
@@ -501,7 +508,7 @@ async function fetchAppointmentsBarbeiro() {
             phone,
             date,
             time,
-            service ( name )
+            service:service_id ( name )
         `)
         .order("date", { ascending: true })
         .order("time", { ascending: true });
