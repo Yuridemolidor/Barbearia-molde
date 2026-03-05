@@ -42,14 +42,15 @@
 <section id="agendamento">
   <h2 style="text-align:center;font-family:'Cinzel';">Agende Seu Horário</h2>
 
-  <div style="max-width:500px;margin:50px auto;display:flex;flex-direction:column;gap:15px;">
+  <div class="agendamento-box">
 
     <input type="text" id="clienteNome" placeholder="Seu Nome">
     <input type="text" id="clienteTelefone" placeholder="Seu Telefone">
 
     <select id="servicoSelect"></select>
 
-    <input type="date" id="dataSelect" onchange="carregarHorarios()">
+    <div id="calendario"></div>
+    <input type="hidden" id="dataSelect">
 
     <select id="horarioSelect">
       <option value="">Selecione uma data primeiro</option>
@@ -161,6 +162,6 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="./scripts/script.js"></script>
+<script type="module" src="./scripts/script.js"></script>
 </body>
 </html>

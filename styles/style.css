@@ -134,44 +134,48 @@ margin-top:10px;
 font-weight:bold;
 }
 
-/* ==================== GALERIA ==================== */
+/* ================= GALERIA ================= */
 
 .gallery{
-column-count:3;
-column-gap:15px;
-margin-top:50px;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:25px;
+max-width:1200px;
+margin:50px auto;
+padding:0 20px;
 }
 
 .gallery-item{
 position:relative;
-margin-bottom:15px;
 overflow:hidden;
+border-radius:14px;
+box-shadow:0 8px 20px rgba(0,0,0,0.35);
+transition:transform 0.4s ease, box-shadow 0.4s ease;
 }
 
-.gallery img{
+.gallery-item img{
 width:100%;
+height:260px;
+object-fit:cover;
 display:block;
-transition:.4s;
+transition:transform 0.4s ease;
+}
+
+/* efeito ao passar o mouse */
+
+.gallery-item:hover{
+transform:translateY(-6px);
+box-shadow:0 15px 35px rgba(0,0,0,0.5);
 }
 
 .gallery-item:hover img{
-transform:scale(1.1);
+transform:scale(1.05);
 }
 
-.gallery-item::after{
-content:"";
-position:absolute;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,.4);
-opacity:0;
-transition:.4s;
-}
-
-.gallery-item:hover::after{
-opacity:1;
+#galeria h2{
+margin-top:80px;
+margin-bottom:10px;
+font-size:32px;
 }
 
 /* ==================== ADMIN ==================== */
@@ -203,6 +207,134 @@ margin-bottom:10px;
 display:flex;
 justify-content:space-between;
 align-items:center;
+}
+
+/* ================= TABELA BARBEIRO ================= */
+
+#barbeiroTable{
+width:100%;
+border-collapse:collapse;
+min-width:600px;
+}
+
+#barbeiroTable th,
+#barbeiroTable td{
+padding:10px;
+font-size:14px;
+}
+
+#barbeiro{
+max-width:100%;
+overflow-x:auto;
+}
+
+/* ================= CALENDÁRIO ================= */
+
+#calendario{
+max-width:400px;
+width:100%;
+margin:20px auto;
+background:rgba(255,255,255,0.05);
+border-radius:15px;
+padding:20px;
+backdrop-filter:blur(10px);
+box-sizing:border-box;
+}
+
+/* header */
+
+.cal-header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:15px;
+font-weight:bold;
+}
+
+/* grade */
+
+.cal-grid{
+display:grid;
+grid-template-columns:repeat(7,1fr);
+gap:8px;
+width:100%;
+}
+
+/* dias */
+
+.cal-dia{
+aspect-ratio:1/1; /* mantém quadrado */
+display:flex;
+align-items:center;
+justify-content:center;
+
+font-size:clamp(12px,2.5vw,16px);
+
+cursor:pointer;
+border-radius:8px;
+transition:.3s;
+}
+
+/* hover */
+
+.cal-dia:hover{
+background:rgba(198,167,94,0.3);
+}
+
+/* selecionado */
+
+.cal-selecionado{
+background:var(--gold);
+color:black;
+}
+
+/* bloqueado */
+
+.cal-bloqueado{
+background:#6b1c1c;
+color:#fff;
+cursor:not-allowed;
+}
+/* ================= AGENDAMENTO BOX ================= */
+
+.agendamento-box{
+max-width:500px;
+margin:50px auto;
+display:flex;
+flex-direction:column;
+gap:15px;
+
+padding:40px;
+
+/* efeito vidro */
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(10px);
+
+/* borda */
+border:1px solid rgba(255,255,255,0.1);
+
+/* borda arredondada */
+border-radius:15px;
+
+/* sombra */
+box-shadow:0 20px 40px rgba(0,0,0,0.6);
+}
+
+/* inputs dentro da caixa */
+
+.agendamento-box input,
+.agendamento-box select{
+padding:12px;
+background:#222;
+border:none;
+color:white;
+border-radius:8px;
+}
+
+.agendamento-box input:focus,
+.agendamento-box select:focus{
+outline:none;
+border:1px solid var(--gold);
 }
 
 /* ==================== FOOTER ==================== */
@@ -257,4 +389,23 @@ color:#777;
 @keyframes fadeUp{
 from{opacity:0;transform:translateY(40px);}
 to{opacity:1;transform:translateY(0);}
+}
+
+/* ================= RESPONSIVO ================= */
+
+@media (max-width:600px){
+
+#calendario{
+padding:15px;
+}
+
+.cal-grid{
+gap:6px;
+}
+
+.cal-dia{
+padding:8px;
+font-size:13px;
+}
+
 }

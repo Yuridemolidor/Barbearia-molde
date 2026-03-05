@@ -1,13 +1,17 @@
-const numeroWhats = "5516999999999";
-const senhaAdmin = "modelo123";
+import { CONFIG } from "../config/config.js";
+
+const numeroWhats = CONFIG.numeroWhats;
+const senhaAdmin = CONFIG.senhaAdmin;
 
 let horariosDisponiveis = [];
 let diasBloqueados = [];
 
+document.title = CONFIG.nomeBarbearia;
+
 /* ================= SUPABASE CONFIG ================= */
 
-const SUPABASE_URL = "https://lwtourrhfehhevpixzgf.supabase.co";
-const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx3dG91cnJoZmVoaGV2cGl4emdmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIxNjk5MjYsImV4cCI6MjA4Nzc0NTkyNn0.3yDpHC6TZ-nTHdRS6Oq1HNWsMVzyjdGLuEc--tt5aio";
+const SUPABASE_URL = CONFIG.SUPABASE_URL;
+const SUPABASE_KEY = CONFIG.SUPABASE_KEY;
 
 const { createClient } = supabase;
 const db = createClient(SUPABASE_URL, SUPABASE_KEY);
@@ -15,8 +19,12 @@ const db = createClient(SUPABASE_URL, SUPABASE_KEY);
 /* ================= WHATS ================= */
 
 function agendar(){
-let msg="Olá, gostaria de agendar um horário na Barbearia Premium.";
-window.open(`https://wa.me/${numeroWhats}?text=${encodeURIComponent(msg)}`,"_blank");
+let msg = `Olá, gostaria de agendar um horário na ${CONFIG.nomeBarbearia}.`;
+
+window.open(
+`https://wa.me/${CONFIG.numeroWhats}?text=${encodeURIComponent(msg)}`,
+"_blank"
+);
 }
 
 /* ================= ADMIN ================= */
@@ -211,6 +219,7 @@ await fetchServices();
 await fetchHorarios();
 await fetchDiasBloqueados();
 await fetchAppointmentsBarbeiro();
+gerarCalendario();
 
 let sairBtn = document.createElement("button");
 sairBtn.textContent = "Sair do Painel";
@@ -221,7 +230,7 @@ sairBtn.onclick = logoutAdmin;
 document.getElementById("adminArea").appendChild(sairBtn);
 
 });
-document.getElementById("ano").textContent = new Date().getFullYear();
+document.getElementById("ano").textContent = CONFIG.anoCriacao;
 
 /* ================= AGENDAMENTO ================= */
 
@@ -412,45 +421,128 @@ ${s.name} - ${s.price}
 
 /* ===== CARREGAR HORÁRIOS DISPONÍVEIS ===== */
 
-async function carregarHorarios() {
-    let dataSelecionada = document.getElementById("dataSelect").value;
-    let select = document.getElementById("horarioSelect");
+async function carregarHorarios(){
 
-    const formatarData = d => new Date(d).toISOString().split('T')[0];
+let dataEscolhida = dataSelecionada;
+let select = document.getElementById("horarioSelect");
 
-    if(!dataSelecionada) {
-        select.innerHTML = "<option value=''>Selecione uma data primeiro</option>";
-        return;
-    }
+if(!dataEscolhida){
+select.innerHTML = "<option value=''>Selecione uma data</option>";
+return;
+}
 
-    if(diasBloqueados.map(formatarData).includes(formatarData(dataSelecionada))) {
-        select.innerHTML = "<option value=''>Barbearia fechada neste dia</option>";
-        return;
-    }
+/* buscar horários ocupados nesse dia */
 
-    // Buscar horários ocupados
-    const { data: agendamentos } = await db
-        .from("appointments")
-        .select("time")
-        .eq("date", dataSelecionada);
+const { data, error } = await db
+.from("appointments")
+.select("time")
+.eq("date", dataEscolhida);
 
-    let ocupados = agendamentos ? agendamentos.map(a => a.time) : [];
+if(error){
+console.error(error);
+return;
+}
 
-    // Preencher select com horários disponíveis
-    select.innerHTML = "";
-    let count = 0;
-    horariosDisponiveis.forEach(h => {
-        if(!ocupados.includes(h)){
-            select.innerHTML += `<option value="${h}">${h}</option>`;
-            count++;
-        }
-    });
+let horariosOcupados = data.map(a => a.time);
 
-    if(count === 0){
-        select.innerHTML = "<option value=''>Sem horários disponíveis</option>";
-    } else {
-        select.selectedIndex = 0; // seleciona primeiro horário disponível
-    }
+/* limpar select */
+
+select.innerHTML = "";
+
+/* mostrar apenas horários livres */
+
+horariosDisponiveis.forEach(h=>{
+
+if(!horariosOcupados.includes(h)){
+
+select.innerHTML += `
+<option value="${h}">
+${h}
+</option>
+`;
+
+}
+
+});
+
+/* se não houver horário */
+
+if(select.innerHTML === ""){
+select.innerHTML = "<option>Sem horários disponíveis</option>";
+}
+
+}
+
+let dataSelecionada = null;
+
+function gerarCalendario(){
+
+let calendario = document.getElementById("calendario");
+let hoje = new Date();
+
+let ano = hoje.getFullYear();
+let mes = hoje.getMonth();
+
+let primeiroDia = new Date(ano, mes, 1).getDay();
+let totalDias = new Date(ano, mes + 1, 0).getDate();
+
+calendario.innerHTML = `
+<div class="cal-header">
+<span>${hoje.toLocaleString("pt-BR",{month:"long"})} ${ano}</span>
+</div>
+
+<div class="cal-grid" id="calGrid"></div>
+`;
+
+let grid = document.getElementById("calGrid");
+
+/* espaços antes do primeiro dia */
+
+for(let i=0;i<primeiroDia;i++){
+grid.innerHTML += "<div></div>";
+}
+
+/* dias do mês */
+
+for(let d=1; d<=totalDias; d++){
+
+let data = new Date(ano,mes,d).toISOString().split("T")[0];
+
+let bloqueado = diasBloqueados.includes(data);
+
+grid.innerHTML += `
+<div class="cal-dia ${bloqueado ? "cal-bloqueado":""}"
+onclick="selecionarData('${data}', ${bloqueado})">
+${d}
+</div>
+`;
+
+}
+
+}
+
+function selecionarData(data, bloqueado){
+
+if(bloqueado) return;
+
+dataSelecionada = data;
+
+/* salvar no input hidden */
+
+document.getElementById("dataSelect").value = data;
+
+document.querySelectorAll(".cal-dia").forEach(d=>{
+d.classList.remove("cal-selecionado");
+});
+
+/* destacar dia */
+
+event.target.classList.add("cal-selecionado");
+
+/* carregar horários */
+
+carregarHorarios();
+
 }
 
 /* ===== CONFIRMAR AGENDAMENTO ===== */
@@ -595,3 +687,17 @@ if(e.target && e.target.id === "dataSelect"){
 carregarHorarios();
 }
 });
+
+window.agendar = agendar;
+window.mostrarAdmin = mostrarAdmin;
+window.confirmarAgendamento = confirmarAgendamento;
+window.loginAdmin = loginAdmin;
+window.salvarServico = salvarServico;
+window.editarServico = editarServico;
+window.excluirServico = excluirServico;
+window.adicionarHorario = adicionarHorario;
+window.removerHorario = removerHorario;
+window.bloquearDia = bloquearDia;
+window.removerDia = removerDia;
+window.cancelarAgendamento = cancelarAgendamento;
+window.selecionarData = selecionarData;
